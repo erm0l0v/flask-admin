@@ -88,7 +88,7 @@
         var editable = ! $el.is(":disabled");
 
         var $map = $("<div>").width($el.data("width")).height($el.data("height"));
-        $el.after($map).hide();
+        $el.after($map).css('width', '300px').css('height', '75px');
 
         var center = null;
         if($el.data("lat") && $el.data("lng")) {
@@ -257,6 +257,11 @@
         })
         map.on('draw:edited', saveToTextArea);
         map.on('draw:deleted', saveToTextArea);
+        $el.on('change', function (e) {
+          var newLayers = new L.geoJson(JSON.parse($el.val()));
+          editableLayers.clearLayers();
+          editableLayers.addLayer(newLayers);
+        })
       }
 
       /**
